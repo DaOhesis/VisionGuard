@@ -79,9 +79,10 @@ class BackgroundWorker:
         logger.info("Stopping BackgroundWorker daemon...")
         self._running = False
 
-        if self._thread is not None and self._thread.is_alive():
-            self._thread.join(timeout=timeout)
-            if self._thread.is_alive():
+        thread = self._thread
+        if thread is not None and thread.is_alive():
+            thread.join(timeout=timeout)
+            if thread.is_alive():
                 logger.warning(
                     "BackgroundWorker thread did not terminate within %s seconds.", timeout
                 )
